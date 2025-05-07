@@ -16,22 +16,21 @@ export default function WritePage() {
 
     // 이메일 전송
     emailjs.send(
-      'service_pt5frrf', // 너의 service ID
-      'template_n6rgsix', // 너의 template ID
+      'YOUR_SERVICE_ID',      // 예: 'service_xxx'
+      'YOUR_TEMPLATE_ID',     // 예: 'template_xxx'
       {
-        from_name: '익명의 사용자',
         message: content,
+        from_name: '익명 사용자',
       },
-      'gdTw6xrIJkLlCFjmW' // 너의 public key
+      'YOUR_PUBLIC_KEY'       // 예: 'AbCdEfGhIj...'
     )
     .then(() => {
-      console.log("이메일 전송 완료");
       setShowMsg(true);
       setTimeout(() => navigate('/select'), 3000);
     })
     .catch((error) => {
-      console.error("이메일 전송 실패", error);
-      alert('메일 전송 중 문제가 생겼어. 다시 시도해줘.');
+      console.error('이메일 전송 실패:', error);
+      alert('문제가 생겼어. 잠시 후 다시 시도해줘.');
     });
   };
 
