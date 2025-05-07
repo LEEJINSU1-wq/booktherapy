@@ -30,24 +30,30 @@ export default function PrescriptionPage() {
       setLoading(false);
       return;
     }
+
     const fetchData = async () => {
       try {
         const docRef = doc(db, 'prescriptions', nickname);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           const data = docSnap.data();
-          setBookTitle(data.book);
-          setQuote(data.quote);
-          setMessage(data.message);
+          setBookTitle(data.book || '');
+          setQuote(data.quote || '');
+          setMessage(data.message || '');
         } else {
+          setBookTitle('');
+          setQuote('');
           setMessage('아직 등록된 처방이 없어요.');
         }
       } catch (error) {
+        setBookTitle('');
+        setQuote('');
         setMessage('데이터를 불러오는 중 오류가 발생했어요.');
       } finally {
         setLoading(false);
       }
     };
+
     fetchData();
   }, []);
 
@@ -58,17 +64,20 @@ export default function PrescriptionPage() {
         <p style={styles.loading}>처방을 불러오고 있어요...</p>
       ) : (
         <div style={styles.card}>
-          {bookTitle && <>
-            <h2 style={styles.title}>📖 추천하는 책</h2>
-            <p style={styles.content}>{bookTitle}</p>
+          {bookTitle ? (
+            <>
+              <h2 style={styles.title}>📖 추천하는 책</h2>
+              <p style={styles.content}>{bookTitle}</p>
 
-            <h2 style={styles.title}>📌 추천하는 구절</h2>
-            <p style={styles.content}>&ldquo;{quote}&rdquo;</p>
+              <h2 style={styles.title}>📌 추천하는 구절</h2>
+              <p style={styles.content}>&ldquo;{quote}&rdquo;</p>
 
-            <h2 style={styles.title}>🩵 위로의 말</h2>
+              <h2 style={styles.title}>🩵 위로의 말</h2>
+              <p style={styles.content}>{message}</p>
+            </>
+          ) : (
             <p style={styles.content}>{message}</p>
-          </>}
-          {!bookTitle && <p style={styles.content}>{message}</p>}
+          )}
         </div>
       )}
       <audio autoPlay loop>

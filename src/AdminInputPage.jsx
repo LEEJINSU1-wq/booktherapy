@@ -37,8 +37,9 @@ export default function AdminInputPage() {
         quote,
         message,
       });
-      setStatus('처방이 저장되었어!');
+      setStatus('📮 처방이 저장되었어!');
     } catch (error) {
+      console.error(error);
       setStatus('저장 중 오류가 발생했어.');
     }
   };
