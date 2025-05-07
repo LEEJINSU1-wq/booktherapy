@@ -1,24 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import emailjs from '@emailjs/browser';
 import logo from './assets/logo.png';
 
 export default function WritePage() {
   const [content, setContent] = useState('');
-  const [nickname, setNickname] = useState('');
   const [showMsg, setShowMsg] = useState(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const storedNickname = localStorage.getItem('nickname') || '익명 사용자';
-    setNickname(storedNickname);
-  }, []);
 
   const handleSubmit = () => {
     if (!content.trim()) {
       alert('마음속 고민을 적어줘.');
       return;
     }
+
+    const nickname = localStorage.getItem('nickname') || '익명 사용자';
 
     emailjs.send(
       'service_pt5frrf',

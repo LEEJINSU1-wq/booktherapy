@@ -38,7 +38,7 @@ export default function SignupPage() {
     if (!password) return alert('비밀번호를 입력해주세요.');
     try {
       await setDoc(doc(db, 'users', nickname), { password });
-      localStorage.setItem('nickname', nickname);  // ✅ 닉네임 저장 추가
+      localStorage.setItem('nickname', nickname); // 닉네임 저장
       alert('회원가입이 완료되었어요!');
       navigate('/write');
     } catch (err) {
