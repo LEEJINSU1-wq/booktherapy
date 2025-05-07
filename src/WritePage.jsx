@@ -14,7 +14,11 @@ export default function WritePage() {
       return;
     }
 
-    const nickname = localStorage.getItem('nickname') || '익명 사용자';
+    let nickname = '익명 사용자';
+    if (typeof window !== 'undefined') {
+      const storedNickname = localStorage.getItem('nickname');
+      if (storedNickname) nickname = storedNickname;
+    }
 
     emailjs.send(
       'service_pt5frrf',
