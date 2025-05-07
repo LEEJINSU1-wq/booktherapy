@@ -1,7 +1,6 @@
-// WritePage.jsx - 고민 입력 페이지
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import emailjs from 'emailjs-com';
 import logo from './assets/logo.png';
 
 export default function WritePage() {
@@ -14,8 +13,26 @@ export default function WritePage() {
       alert('마음속 고민을 적어줘.');
       return;
     }
-    setShowMsg(true);
-    setTimeout(() => navigate('/select'), 3000); // 잠시 후 다시 선택화면으로 이동
+
+    // 이메일 전송
+    emailjs.send(
+      'service_pt5frrf', // 너의 service ID
+      'template_n6rgsix', // 너의 template ID
+      {
+        from_name: '익명의 사용자',
+        message: content,
+      },
+      'gdTw6xrIJkLlCFjmW' // 너의 public key
+    )
+    .then(() => {
+      console.log("이메일 전송 완료");
+      setShowMsg(true);
+      setTimeout(() => navigate('/select'), 3000);
+    })
+    .catch((error) => {
+      console.error("이메일 전송 실패", error);
+      alert('메일 전송 중 문제가 생겼어. 다시 시도해줘.');
+    });
   };
 
   return (
