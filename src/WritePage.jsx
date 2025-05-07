@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import emailjs from 'emailjs-com';
+import emailjs from '@emailjs/browser';
 import logo from './assets/logo.png';
 
 export default function WritePage() {
@@ -14,22 +14,23 @@ export default function WritePage() {
       return;
     }
 
-    // 이메일 전송
+    const nickname = localStorage.getItem('nickname') || '익명 사용자';
+
     emailjs.send(
-      'service_pt5frrf',      // 예: 'service_xxx'
-      'template_n6rgsix',     // 예: 'template_xxx'
+      'service_pt5frrf',
+      'template_n6rgsix',
       {
         message: content,
-        from_name: '익명 사용자',
+        from_name: nickname,
       },
-      'gdTw6xrIJkLlCFjmW'       // 예: 'AbCdEfGhIj...'
+      'gdTw6xrIJkLlCFjmW'
     )
     .then(() => {
       setShowMsg(true);
       setTimeout(() => navigate('/select'), 3000);
     })
     .catch((error) => {
-      console.error('이메일 전송 실패:', error);
+      console.error(error);
       alert('문제가 생겼어. 잠시 후 다시 시도해줘.');
     });
   };
