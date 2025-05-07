@@ -1,0 +1,47 @@
+/* App.css - 글씨체 적용 */
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap');
+
+body {
+  font-family: 'Nanum Pen Script', cursive;
+  margin: 0;
+  padding: 0;
+  background-color: #fffaf5;
+}
+* {
+  font-family: 'Nanum Pen Script', cursive;
+}
+.background-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('/background.jpg');
+  background-size: cover;
+  background-position: center;
+  filter: blur(10px);
+  opacity: 0.3;
+  z-index: -1;
+}
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 40px;
+  font-size: 20px;
+}
+
+/* 태블릿 대응 */
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 20px;
+    font-size: 18px;
+  }
+}
+
+/* 모바일 대응 */
+@media screen and (max-width: 480px) {
+  .container {
+    padding: 10px;
+    font-size: 16px;
+  }
+}
