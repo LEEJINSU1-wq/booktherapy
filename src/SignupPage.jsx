@@ -38,8 +38,9 @@ export default function SignupPage() {
     if (!password) return alert('비밀번호를 입력해주세요.');
     try {
       await setDoc(doc(db, 'users', nickname), { password });
+      localStorage.setItem('nickname', nickname);  // ✅ 닉네임 저장 추가
       alert('회원가입이 완료되었어요!');
-      navigate('/write'); // 회원가입 완료 후 고민 작성 페이지로 이동
+      navigate('/write');
     } catch (err) {
       console.error(err);
       alert('오류가 발생했어요.');
