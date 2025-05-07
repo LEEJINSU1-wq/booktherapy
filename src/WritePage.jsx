@@ -16,13 +16,13 @@ export default function WritePage() {
 
     // 이메일 전송
     emailjs.send(
-      'YOUR_SERVICE_ID',      // 예: 'service_xxx'
-      'YOUR_TEMPLATE_ID',     // 예: 'template_xxx'
+      'service_pt5frrf',      // 예: 'service_xxx'
+      'template_n6rgsix',     // 예: 'template_xxx'
       {
         message: content,
         from_name: '익명 사용자',
       },
-      'YOUR_PUBLIC_KEY'       // 예: 'AbCdEfGhIj...'
+      'gdTw6xrIJkLlCFjmW'       // 예: 'AbCdEfGhIj...'
     )
     .then(() => {
       setShowMsg(true);
