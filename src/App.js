@@ -9,6 +9,8 @@ import SelectPage from './SelectPage';
 import WritePage from './WritePage';
 import PrescriptionPage from './PrescriptionPage';
 import AdminInputPage from './AdminInputPage';
+import AdminWorryList from './AdminWorryList';
+import AdminPrescriptionInput from './AdminPrescriptionInput';
 
 function App() {
   return (
@@ -20,8 +22,10 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/select" element={<SelectPage />} />
         <Route path="/write" element={<WritePage />} />
+        <Route path="/admin/worries" element={<AdminWorryList />} />
         <Route path="/prescription" element={<PrescriptionPage />} />
         <Route path="/admin" element={<AdminInputPage />} />
+        <Route path="/admin/prescribe/:nickname" element={<AdminPrescriptionInput />} />
       </Routes>
     </Router>
   );

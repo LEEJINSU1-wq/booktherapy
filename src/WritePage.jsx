@@ -1,44 +1,49 @@
-import React, { useState, useEffect } from 'react';
+// WritePage.jsx - 고민 입력 페이지 (Firebase에 저장하도록 수정)
+
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import emailjs from '@emailjs/browser';
+import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import logo from './assets/logo.png';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCpG2j6U6WTUrURFuESbNi0YR8cNZzSdy0",
+  authDomain: "booktherapy-app.firebaseapp.com",
+  projectId: "booktherapy-app",
+  storageBucket: "booktherapy-app.appspot.com",
+  messagingSenderId: "968256740810",
+  appId: "1:968256740810:web:73a6647c79b0339170333",
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 export default function WritePage() {
   const [content, setContent] = useState('');
-  const [nickname, setNickname] = useState('익명 사용자');
   const [showMsg, setShowMsg] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const storedNickname = localStorage.getItem('nickname');
-    if (storedNickname) {
-      setNickname(storedNickname);
-    }
-  }, []);
-
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!content.trim()) {
       alert('마음속 고민을 적어줘.');
       return;
     }
 
-    emailjs.send(
-      'service_pt5frrf',
-      'template_n6rgsix',
-      {
-        message: content,
-        from_name: nickname,
-      },
-      'gdTw6xrIJkLlCFjmW'
-    )
-    .then(() => {
+    const nickname = localStorage.getItem('nickname') || '익명 사용자';
+
+    try {
+      await addDoc(collection(db, 'worries'), {
+        nickname,
+        content,
+        createdAt: serverTimestamp(),
+      });
+
       setShowMsg(true);
       setTimeout(() => navigate('/select'), 3000);
-    })
-    .catch((error) => {
-      console.error(error);
-      alert('문제가 생겼어. 잠시 후 다시 시도해줘.');
-    });
+    } catch (err) {
+      console.error(err);
+      alert('고민을 저장하는 중 문제가 생겼어.');
+    }
   };
 
   return (
@@ -56,7 +61,7 @@ export default function WritePage() {
           <button onClick={handleSubmit} style={styles.button}>고민 전하기</button>
         </>
       ) : (
-        <p style={styles.message}>잠시만 기다려 주세요. 당신에게 꼭 맞는 위로의 책을 찾아드릴게요.</p>
+        <p style={styles.message}>잠시만 기다려 주세요. 당신에게 꼭 맞는 위로의 책을 찾아드릴게요. 처방이 도착하면 앱에 접속했을 때 알림이 떠요!</p>
       )}
     </div>
   );
